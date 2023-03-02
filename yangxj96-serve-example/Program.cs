@@ -1,6 +1,7 @@
 using Nacos.AspNetCore.V2;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
+using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
 
 namespace yangxj96_serve_example
@@ -22,7 +23,7 @@ namespace yangxj96_serve_example
                     // 是否格式化文本
                     jso.WriteIndented = true;
                     // 添加时间格式转换器
-                    // jso.Converters.Add(new System.Text.Json.)
+                    jso.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
                     // 字段使用驼峰命名
                     // jso.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     // 字段使用下划线

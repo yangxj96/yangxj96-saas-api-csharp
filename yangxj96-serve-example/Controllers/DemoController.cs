@@ -26,7 +26,8 @@ namespace yangxj96_serve_example.Controllers
                 {
                     Id = i,
                     Name = $"username-{i}",
-                    Description = $"description-{i}"
+                    Description = $"description-{i}",
+                    CreatedDate = DateTime.Now,
                 };
                 list.Add(datum);
             }
