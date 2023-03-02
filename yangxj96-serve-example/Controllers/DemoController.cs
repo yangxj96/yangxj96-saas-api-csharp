@@ -11,13 +11,13 @@ namespace yangxj96_serve_example.Controllers
 
         public DemoController(ILogger<NacosController> logger)
         {
-            this._logger = logger;
+            _logger = logger;
         }
 
         [HttpGet]
         public List<Demo> Get()
         {
-            _logger.LogInformation($"demo controller get");
+            _logger.LogDebug($"demo controller get");
             var list = new List<Demo>();
 
             for (int i = 0; i < 10; i++)
