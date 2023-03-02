@@ -11,7 +11,6 @@ namespace yangxj96_serve_example
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services
                 .AddControllers()
                 // System.Text.Json ≈‰÷√
