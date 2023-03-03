@@ -1,6 +1,4 @@
-﻿using SqlSugar;
-
-namespace yangxj96_serve_example.Model
+﻿namespace yangxj96_serve_demo.Model
 {
     public class Demo
     {

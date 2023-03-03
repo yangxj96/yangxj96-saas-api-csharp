@@ -4,13 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>yangxj96_serve_example</RootNamespace>
+    <RootNamespace>yangxj96_serve_demo</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="nacos-sdk-csharp" Version="1.3.4" />
     <PackageReference Include="nacos-sdk-csharp.AspNetCore" Version="1.3.4" />
-    <PackageReference Include="SqlSugarCore" Version="5.1.3.52" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.2" />
   </ItemGroup>
