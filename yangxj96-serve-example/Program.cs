@@ -1,5 +1,7 @@
 using Nacos.AspNetCore.V2;
+using Newtonsoft.Json.Serialization;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
@@ -8,6 +10,8 @@ namespace yangxj96_serve_example
 {
     public class Program
     {
+        protected Program() { }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -24,8 +28,6 @@ namespace yangxj96_serve_example
                     jso.WriteIndented = true;
                     // 添加时间格式转换器
                     jso.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-                    // 字段使用驼峰命名
-                    // jso.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     // 字段使用下划线
                     jso.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy();
                     // 忽略null值
@@ -36,8 +38,7 @@ namespace yangxj96_serve_example
                     jso.AllowTrailingCommas = true;
                     // 处理循环引用类型
                     jso.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                })
-                ;
+                });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -54,7 +55,6 @@ namespace yangxj96_serve_example
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

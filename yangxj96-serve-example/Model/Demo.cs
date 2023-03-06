@@ -1,4 +1,4 @@
-﻿using SqlSugar;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace yangxj96_serve_example.Model
 {
@@ -23,11 +23,5 @@ namespace yangxj96_serve_example.Model
         /// 创建时间
         /// </summary>
         public DateTime? CreatedDate { get; set; }
-
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
     }
 }

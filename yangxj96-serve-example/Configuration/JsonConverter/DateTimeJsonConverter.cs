@@ -26,7 +26,7 @@ namespace yangxj96_serve_example.Configuration.JsonConverter
                 _ = e.ToString();
                 return DateTime.MinValue;
             }
-            
+
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)

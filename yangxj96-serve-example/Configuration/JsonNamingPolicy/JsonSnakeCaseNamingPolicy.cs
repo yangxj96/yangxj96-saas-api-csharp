@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Newtonsoft.Json.Serialization;
+using System.Text;
 
 namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
 {
