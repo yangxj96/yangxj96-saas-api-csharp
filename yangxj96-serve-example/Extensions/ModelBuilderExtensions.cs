@@ -19,7 +19,8 @@ namespace yangxj96_serve_example.Extensions
                     Id = i,
                     Name = $"Name{i}",
                     Description = $"Description{i}",
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    IsDeleted = false,
                 };
                 demos.Add(datum);
             }
