@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using yangxj96_serve_example.Model;
+using yangxj96_serve_example.Remote;
 
 namespace yangxj96_serve_example.Controllers
 {
@@ -9,15 +10,18 @@ namespace yangxj96_serve_example.Controllers
     {
         private readonly ILogger<NacosController> _logger;
 
-        public DemoController(ILogger<NacosController> logger)
+        private readonly SystemRemote _systemRemote;
+
+        public DemoController(ILogger<NacosController> logger,SystemRemote systemRemote)
         {
             _logger = logger;
+            _systemRemote = systemRemote;
         }
 
         [HttpGet]
         public List<Demo> Get()
         {
-            _logger.LogDebug($"demo controller get");
+            _logger.LogInformation($"demo controller get");
             var list = new List<Demo>();
 
             for (int i = 0; i < 10; i++)
@@ -53,5 +57,10 @@ namespace yangxj96_serve_example.Controllers
             _logger.LogInformation($"put param:{param.ToString()}");
         }
 
+        [HttpGet("GetDemo")]
+        public async Task<string> GetDemo()
+        {
+            return await _systemRemote.Demo();
+        }
     }
 }

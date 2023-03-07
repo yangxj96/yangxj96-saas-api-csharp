@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
+using yangxj96_serve_example.Remote;
 
 namespace yangxj96_serve_example
 {
@@ -45,6 +46,8 @@ namespace yangxj96_serve_example
             // Ìí¼Ónacos·þÎñ
             builder.Services.AddNacosAspNet(builder.Configuration, section: "NacosConfig");
 
+            builder.Services.AddSingleton<SystemRemote>();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

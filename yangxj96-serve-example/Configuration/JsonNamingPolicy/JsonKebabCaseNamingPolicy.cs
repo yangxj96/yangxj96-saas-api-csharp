@@ -11,16 +11,13 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
 
         public override string ConvertName(string name)
         {
-            if (String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name)) return String.Empty;
+            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name)) return String.Empty;
 
             ReadOnlySpan<char> spanName = name.Trim();
 
             var stringBuilder = new StringBuilder();
             var addCharacter = true;
 
-            var isPreviousSpace = false;
-            var isPreviousSeparator = false;
-            var isCurrentSpace = false;
             var isNextLower = false;
             var isNextUpper = false;
             var isNextSpace = false;
@@ -29,9 +26,9 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
             {
                 if (position != 0)
                 {
-                    isCurrentSpace = spanName[position] == 32;
-                    isPreviousSpace = spanName[position - 1] == 32;
-                    isPreviousSeparator = spanName[position - 1] == 95;
+                    var isCurrentSpace = spanName[position] == 32;
+                    var isPreviousSpace = spanName[position - 1] == 32;
+                    var isPreviousSeparator = spanName[position - 1] == 95;
 
                     if (position + 1 != spanName.Length)
                     {
