@@ -8,7 +8,8 @@ namespace yangxj96_serve_example.Remote
 
         private readonly INacosNamingService _svc;
 
-        public SystemRemote(ILogger<SystemRemote> logger,INacosNamingService svc) {
+        public SystemRemote(ILogger<SystemRemote> logger, INacosNamingService svc)
+        {
             this._logger = logger;
             this._svc = svc;
         }

@@ -1,11 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Nacos.AspNetCore.V2;
-using Newtonsoft.Json.Serialization;
 using System.Text.Encodings.Web;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
+using yangxj96_serve_example.Mapper;
 using yangxj96_serve_example.Remote;
+using yangxj96_serve_example.Repository;
+using yangxj96_serve_example.Repository.Impl;
 
 namespace yangxj96_serve_example
 {
@@ -45,17 +47,31 @@ namespace yangxj96_serve_example
             builder.Services.AddSwaggerGen();
             // 添加nacos服务
             builder.Services.AddNacosAspNet(builder.Configuration, section: "NacosConfig");
-
+            // EF 
+            builder.Services.AddDbContextPool<AppDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"));
+            });
+            // 相关服务注入
             builder.Services.AddSingleton<SystemRemote>();
-            
+
+            // 数据库相关注入
+            builder.Services.AddSingleton<AppDbContext>();
+            builder.Services.AddSingleton<IDemoRepository, DemoRepositoryImpl>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                // 开发人员详情页面
+                app.UseDeveloperExceptionPage();
+
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
 
             app.UseAuthorization();
 

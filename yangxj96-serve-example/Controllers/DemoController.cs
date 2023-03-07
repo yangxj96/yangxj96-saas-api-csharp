@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using yangxj96_serve_example.Model;
-using yangxj96_serve_example.Remote;
+using yangxj96_serve_example.Repository;
 
 namespace yangxj96_serve_example.Controllers
 {
@@ -10,58 +10,44 @@ namespace yangxj96_serve_example.Controllers
     {
         private readonly ILogger<NacosController> _logger;
 
-        private readonly SystemRemote _systemRemote;
+        private readonly IDemoRepository _repository;
 
-        public DemoController(ILogger<NacosController> logger,SystemRemote systemRemote)
+
+        public DemoController(ILogger<NacosController> logger, IDemoRepository repository)
         {
             _logger = logger;
-            _systemRemote = systemRemote;
+            _repository = repository;
         }
 
         [HttpGet]
-        public List<Demo> Get()
+        public Demo? Get(int id)
         {
-            _logger.LogInformation($"demo controller get");
-            var list = new List<Demo>();
+            _logger.LogInformation($"获取单条数据,ID:{id}");
+            return _repository.GetDemo(id);
+        }
 
-            for (int i = 0; i < 10; i++)
-            {
-                var datum = new Demo
-                {
-                    Id = i,
-                    Name = $"username-{i}",
-                    Description = $"description-{i}",
-                    CreatedDate = DateTime.Now,
-                };
-                list.Add(datum);
-            }
-
-            return list;
+        [HttpGet("All")]
+        public List<Demo> GetAll()
+        {
+            return (List<Demo>)_repository.GetAllDemos();
         }
 
         [HttpPost]
-        public void Post(Demo param)
+        public Demo Add(Demo param)
         {
-            _logger.LogInformation($"post param:{param.ToString()}");
+            return _repository.Add(param);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Demo? Remove(int id)
         {
-            _logger.LogInformation($"delete id:{id}");
+            return _repository.Delete(id);
         }
 
         [HttpPut]
-        public void Put(Demo param)
+        public Demo Update(Demo param)
         {
-            _logger.LogInformation($"put param:{param.ToString()}");
-        }
-
-        [HttpGet("GetDemo")]
-        public async Task<string> GetDemo()
-        {
-            _logger.LogInformation("🎨 输出");
-            return await _systemRemote.Demo();
+            return _repository.Update(param);
         }
     }
 }
