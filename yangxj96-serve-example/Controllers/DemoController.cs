@@ -60,6 +60,7 @@ namespace yangxj96_serve_example.Controllers
         [HttpGet("GetDemo")]
         public async Task<string> GetDemo()
         {
+            _logger.LogInformation("🎨 输出");
             return await _systemRemote.Demo();
         }
     }
