@@ -29,6 +29,7 @@ namespace yangxj96_serve_example.Controllers
         [HttpGet("All")]
         public List<Demo> GetAll()
         {
+            IEnumerable<Demo> demos = _repository.GetAllDemos();
             return (List<Demo>)_repository.GetAllDemos();
         }
 
