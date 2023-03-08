@@ -10,11 +10,11 @@ namespace yangxj96_serve_example.Remote
 
         public SystemRemote(ILogger<SystemRemote> logger, INacosNamingService svc)
         {
-            this._logger = logger;
-            this._svc = svc;
+            _logger = logger;
+            _svc = svc;
         }
 
-        public async Task<String> Demo()
+        public async Task<string> Demo()
         {
             _logger.LogInformation("SystemRemote Demo");
             var instance = await _svc.SelectOneHealthyInstance("yangxj96-serve-example-csharp", "DEFAULT_GROUP");
@@ -24,10 +24,10 @@ namespace yangxj96_serve_example.Remote
             {
                 return "empty";
             }
+
             using var client = new HttpClient();
             var result = await client.GetAsync($"{baseUrl}/Demo");
             return await result.Content.ReadAsStringAsync();
         }
-
     }
 }

@@ -13,12 +13,12 @@ namespace yangxj96_serve_example.Controllers
 
         public NacosController(ILogger<NacosController> logger, INacosNamingService svc)
         {
-            this._logger = logger;
-            this._svc = svc;
+            _logger = logger;
+            _svc = svc;
         }
 
         [HttpGet]
-        public async Task<String> Get()
+        public async Task<string> Get()
         {
             _logger.LogInformation("nacos controller debug get");
             var instance = await _svc.SelectOneHealthyInstance("yangxj96-serve-example-csharp", "DEFAULT_GROUP");
@@ -28,10 +28,10 @@ namespace yangxj96_serve_example.Controllers
             {
                 return "empty";
             }
+
             using var client = new HttpClient();
             var result = await client.GetAsync($"{baseUrl}/api/Nacos");
             return await result.Content.ReadAsStringAsync();
         }
-
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace yangxj96_serve_example.Configuration.JsonConverter
 {
     /// <summary>
     /// 日期时间格式格式化
     /// </summary>
-    public class DateTimeJsonConverter : System.Text.Json.Serialization.JsonConverter<DateTime>
+    public class DateTimeJsonConverter : JsonConverter<DateTime>
     {
-
         private readonly string _format;
 
         public DateTimeJsonConverter(string format)
@@ -26,7 +26,6 @@ namespace yangxj96_serve_example.Configuration.JsonConverter
                 _ = e.ToString();
                 return DateTime.MinValue;
             }
-
         }
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)

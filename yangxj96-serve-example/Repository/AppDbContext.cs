@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using yangxj96_serve_example.Model;
 using yangxj96_serve_example.Extensions;
+using yangxj96_serve_example.Model;
 
-namespace yangxj96_serve_example.Mapper
+namespace yangxj96_serve_example.Repository
 {
-
     /// <summary>
     /// 迁移概述 https://learn.microsoft.com/zh-cn/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli
     /// </summary>
@@ -14,7 +13,6 @@ namespace yangxj96_serve_example.Mapper
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
 
         /// <summary>
@@ -25,6 +23,5 @@ namespace yangxj96_serve_example.Mapper
         {
             modelBuilder.SeedDemo();
         }
-
     }
 }

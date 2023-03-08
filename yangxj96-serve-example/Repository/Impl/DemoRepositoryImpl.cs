@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using yangxj96_serve_example.Mapper;
 using yangxj96_serve_example.Model;
 
 namespace yangxj96_serve_example.Repository.Impl
@@ -36,6 +35,7 @@ namespace yangxj96_serve_example.Repository.Impl
                 _context.Demos.Remove(datum);
                 _context.SaveChanges();
             }
+
             return datum;
         }
 

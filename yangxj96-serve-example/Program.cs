@@ -1,10 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Nacos.AspNetCore.V2;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Nacos.AspNetCore.V2;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
-using yangxj96_serve_example.Mapper;
 using yangxj96_serve_example.Remote;
 using yangxj96_serve_example.Repository;
 using yangxj96_serve_example.Repository.Impl;
@@ -13,7 +12,9 @@ namespace yangxj96_serve_example
 {
     public class Program
     {
-        protected Program() { }
+        protected Program()
+        {
+        }
 
         public static void Main(string[] args)
         {
@@ -70,7 +71,6 @@ namespace yangxj96_serve_example
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
 
 
             app.UseAuthorization();

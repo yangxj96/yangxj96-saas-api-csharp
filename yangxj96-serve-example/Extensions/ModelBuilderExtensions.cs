@@ -24,6 +24,7 @@ namespace yangxj96_serve_example.Extensions
                 };
                 demos.Add(datum);
             }
+
             modelBuilder.Entity<Demo>().HasData(demos);
         }
     }

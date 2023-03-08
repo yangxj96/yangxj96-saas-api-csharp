@@ -7,7 +7,7 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
     /// </summary>
     public class JsonKebabCaseNamingPolicy : System.Text.Json.JsonNamingPolicy
     {
-        private readonly string _separator = "-";
+        private const string Separator = "-";
 
         public override string ConvertName(string name)
         {
@@ -22,7 +22,7 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
             var isNextUpper = false;
             var isNextSpace = false;
 
-            for (int position = 0; position < spanName.Length; position++)
+            for (var position = 0; position < spanName.Length; position++)
             {
                 if (position != 0)
                 {
@@ -39,9 +39,9 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
 
                     if ((isCurrentSpace) &&
                         ((isPreviousSpace) ||
-                        (isPreviousSeparator) ||
-                        (isNextUpper) ||
-                        (isNextSpace)))
+                         (isPreviousSeparator) ||
+                         (isNextUpper) ||
+                         (isNextSpace)))
                         addCharacter = false;
                     else
                     {
@@ -50,19 +50,19 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
                         var isPreviousNumber = spanName[position - 1] > 47 && spanName[position - 1] < 58;
 
                         if ((isCurrentUpper) &&
-                        ((isPreviousLower) ||
-                        (isPreviousNumber) ||
-                        (isNextLower) ||
-                        (isNextSpace) ||
-                        (isNextLower && !isPreviousSpace)))
-                            stringBuilder.Append(_separator);
+                            ((isPreviousLower) ||
+                             (isPreviousNumber) ||
+                             (isNextLower) ||
+                             (isNextSpace) ||
+                             (isNextLower && !isPreviousSpace)))
+                            stringBuilder.Append(Separator);
                         else
                         {
                             if ((isCurrentSpace &&
-                                !isPreviousSpace &&
-                                !isNextSpace))
+                                 !isPreviousSpace &&
+                                 !isNextSpace))
                             {
-                                stringBuilder.Append(_separator);
+                                stringBuilder.Append(Separator);
                                 addCharacter = false;
                             }
                         }
