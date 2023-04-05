@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Nacos.V2;
+using yangxj96_serve_example.Remote;
 
 namespace yangxj96_serve_example.Controllers
 {
@@ -9,29 +9,19 @@ namespace yangxj96_serve_example.Controllers
     {
         private readonly ILogger<NacosController> _logger;
 
-        private readonly INacosNamingService _svc;
+        private readonly SystemRemote _remote;
 
-        public NacosController(ILogger<NacosController> logger, INacosNamingService svc)
+        public NacosController(ILogger<NacosController> logger, SystemRemote remote)
         {
             _logger = logger;
-            _svc = svc;
+            _remote = remote;
         }
 
         [HttpGet]
         public async Task<string> Get()
         {
             _logger.LogInformation("nacos controller debug get");
-            var instance = await _svc.SelectOneHealthyInstance("yangxj96-serve-example-csharp", "DEFAULT_GROUP");
-            var host = $"{instance.Ip}:{instance.Port}";
-            var baseUrl = $"http://{host}";
-            if (string.IsNullOrEmpty(baseUrl))
-            {
-                return "empty";
-            }
-
-            using var client = new HttpClient();
-            var result = await client.GetAsync($"{baseUrl}/api/Nacos");
-            return await result.Content.ReadAsStringAsync();
+            return await _remote.Demo();
         }
     }
 }

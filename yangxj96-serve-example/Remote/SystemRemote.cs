@@ -26,7 +26,7 @@ namespace yangxj96_serve_example.Remote
             }
 
             using var client = new HttpClient();
-            var result = await client.GetAsync($"{baseUrl}/Demo");
+            var result = await client.GetAsync($"{baseUrl}/Demo/All");
             return await result.Content.ReadAsStringAsync();
         }
     }

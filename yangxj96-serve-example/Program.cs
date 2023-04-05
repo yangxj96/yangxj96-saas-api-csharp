@@ -1,7 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 using Nacos.AspNetCore.V2;
+using SqlSugar;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
 using yangxj96_serve_example.Remote;
@@ -43,21 +43,25 @@ namespace yangxj96_serve_example
                     // 处理循环引用类型
                     jso.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 });
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // 添加nacos服务
             builder.Services.AddNacosAspNet(builder.Configuration, section: "NacosConfig");
-            // EF 
-            builder.Services.AddDbContextPool<AppDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"));
-            });
             // 相关服务注入
             builder.Services.AddSingleton<SystemRemote>();
 
             // 数据库相关注入
-            builder.Services.AddSingleton<AppDbContext>();
+            builder.Services.AddSingleton<ISqlSugarClient>(s =>
+            {
+                var client = new SqlSugarScope(new ConnectionConfig
+                {
+                    DbType = DbType.SqlServer,
+                    ConnectionString = builder.Configuration.GetConnectionString("SQLServer"),
+                    IsAutoCloseConnection = true
+                });
+                return client;
+            });
             builder.Services.AddSingleton<IDemoRepository, DemoRepositoryImpl>();
 
             var app = builder.Build();

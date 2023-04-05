@@ -1,51 +1,64 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using SqlSugar;
 using yangxj96_serve_example.Model;
 
 namespace yangxj96_serve_example.Repository.Impl
 {
     public class DemoRepositoryImpl : IDemoRepository
     {
-        private readonly AppDbContext _context;
+        private readonly ILogger<DemoRepositoryImpl> _logger;
 
-        public DemoRepositoryImpl(AppDbContext context)
+        private readonly ISqlSugarClient _db;
+
+        public DemoRepositoryImpl(ILogger<DemoRepositoryImpl> logger, ISqlSugarClient db)
         {
-            _context = context;
+            _logger = logger;
+            _db = db;
         }
 
-        public Demo Add(Demo param)
+        public async Task<Demo?> Add(Demo param)
         {
-            _context.Demos.Add(param);
-            _context.SaveChanges();
-            return param;
+            _logger.LogInformation($"添加一条数据");
+            return await _db.Insertable<Demo>(param).ExecuteReturnEntityAsync();
         }
 
-        public Demo Update(Demo param)
+        public async Task<Demo?> Update(Demo param)
         {
-            _context.Demos.Update(param);
-            _context.SaveChanges();
-            return param;
-        }
-
-        public Demo? Delete(int id)
-        {
-            var datum = _context.Demos.Find(id);
-            if (datum != null)
+            if (await _db.Updateable<Demo>(param).ExecuteCommandHasChangeAsync())
             {
-                _context.Demos.Remove(datum);
-                _context.SaveChanges();
+                return param;
             }
 
-            return datum;
+            return null;
         }
 
-        public Demo? GetDemo(int id)
+        public async Task<Demo?> Delete(int id)
         {
-            return _context.Demos.Find(id);
+            var datum = await _db.Queryable<Demo>().Where(i => i.Id == id).FirstAsync();
+            if (datum == null)
+            {
+                return null;
+            }
+
+            if (await _db.Deleteable<Demo>().Where(i => i.Id == id).ExecuteCommandHasChangeAsync())
+            {
+                return datum;
+            }
+
+            return null;
         }
 
-        public IEnumerable<Demo> GetAllDemos()
+        public async Task<Demo?> GetDemo(int id)
         {
-            return _context.Demos;
+            _logger.LogInformation($"获取单条数据,ID:{id}");
+            return await _db.Queryable<Demo>()
+                .Where(it => it.Id == id)
+                .FirstAsync();
+        }
+
+        public async Task<IEnumerable<Demo?>> GetAllDemos()
+        {
+            _logger.LogInformation($"获取所有数据");
+            return await _db.Queryable<Demo>().ToListAsync();
         }
     }
 }
