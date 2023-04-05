@@ -18,12 +18,12 @@ namespace yangxj96_serve_example.Repository.Impl
         public async Task<Demo?> Add(Demo param)
         {
             _logger.LogInformation($"添加一条数据");
-            return await _db.Insertable<Demo>(param).ExecuteReturnEntityAsync();
+            return await _db.Insertable(param).ExecuteReturnEntityAsync();
         }
 
         public async Task<Demo?> Update(Demo param)
         {
-            if (await _db.Updateable<Demo>(param).ExecuteCommandHasChangeAsync())
+            if (await _db.Updateable(param).ExecuteCommandHasChangeAsync())
             {
                 return param;
             }
