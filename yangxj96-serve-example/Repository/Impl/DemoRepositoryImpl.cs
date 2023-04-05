@@ -21,8 +21,7 @@ namespace yangxj96_serve_example.Repository.Impl
 
         public Demo Update(Demo param)
         {
-            var demo = _context.Demos.Attach(param);
-            demo.State = EntityState.Modified;
+            _context.Demos.Update(param);
             _context.SaveChanges();
             return param;
         }

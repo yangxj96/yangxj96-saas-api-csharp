@@ -12,7 +12,6 @@ namespace yangxj96_serve_example.Controllers
 
         private readonly IDemoRepository _repository;
 
-
         public DemoController(ILogger<NacosController> logger, IDemoRepository repository)
         {
             _logger = logger;
@@ -27,10 +26,9 @@ namespace yangxj96_serve_example.Controllers
         }
 
         [HttpGet("All")]
-        public List<Demo> GetAll()
+        public IEnumerable<Demo> GetAll()
         {
-            IEnumerable<Demo> demos = _repository.GetAllDemos();
-            return (List<Demo>)_repository.GetAllDemos();
+            return _repository.GetAllDemos();
         }
 
         [HttpPost]
@@ -39,7 +37,7 @@ namespace yangxj96_serve_example.Controllers
             return _repository.Add(param);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public Demo? Remove(int id)
         {
             return _repository.Delete(id);
