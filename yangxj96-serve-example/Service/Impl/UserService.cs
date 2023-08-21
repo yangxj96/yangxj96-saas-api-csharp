@@ -18,18 +18,14 @@ public class UserService : DbContext<User>, IUserService
         _logger.LogInformation("[UserService] 创建用户");
         try
         {
-            if (datum.Id != null)
+            if (datum.Id < 0)
             {
                 throw new DataExistException("[UserService] ID异常");
             }
-            
-            
 
             using var tran = Db.UseTran();
             var id = Db.Insertable(datum).ExecuteReturnSnowflakeId();
-
             tran.CommitTran();
-
             return SimpleDb.GetById(id);
         }
         catch (Exception e)
@@ -64,23 +60,21 @@ public class UserService : DbContext<User>, IUserService
 
         try
         {
-            if (datum.Id != null)
+            if (datum.Id < 0)
             {
                 throw new DataNotExistException("[UserService] 数据不存在");
             }
 
             using var tran = Db.UseTran();
             var result = Db.Updateable(datum).ExecuteCommandHasChange();
-
             tran.CommitTran();
-
             return result ? SimpleDb.GetById(datum.Id) : null;
         }
         catch (Exception e)
         {
             Db.RollbackTran();
             _logger.LogError("[UserService] 更新用户失败:{}", e.Message);
-            throw new DataDeletedException("[UserService] 更新用户失败," + e.Message);
+            throw new DataUpdateException("[UserService] 更新用户失败," + e.Message);
         }
     }
 

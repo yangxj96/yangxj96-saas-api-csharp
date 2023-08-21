@@ -32,7 +32,7 @@ public class R
     {
         return new R
         {
-            Code = 0,
+            Code = RStatus.Success.GetHashCode(),
             Msg = RStatus.Success.GetDisplayName(),
             Data = data
         };
@@ -46,8 +46,22 @@ public class R
     {
         return new R
         {
-            Code = -1,
+            Code = RStatus.Failure.GetHashCode(),
             Msg = RStatus.Failure.GetDisplayName(),
+        };
+    }
+
+    /// <summary>
+    /// 失败定义
+    /// </summary>
+    /// <param name="status">状态</param>
+    /// <returns>R</returns>
+    public static R FailureSpecify(RStatus status)
+    {
+        return new R
+        {
+            Code = status.GetHashCode(),
+            Msg = status.GetDisplayName()
         };
     }
 }

@@ -6,6 +6,7 @@ using Autofac.Extensions.DependencyInjection;
 using Nacos.AspNetCore.V2;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
+using yangxj96_serve_example.Filter;
 
 namespace yangxj96_serve_example;
 
@@ -16,7 +17,11 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services
-            .AddControllers()
+            .AddControllers(options =>
+            {
+                // 全局异常处理器
+                options.Filters.Add(new HttpExceptionFilter());
+            })
             .AddJsonOptions(options =>
             {
                 var jso = options.JsonSerializerOptions;

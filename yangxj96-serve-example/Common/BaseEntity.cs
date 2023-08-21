@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using SqlSugar;
+using yangxj96_serve_example.Configuration.JsonConverter;
 
 namespace yangxj96_serve_example.Common;
 
@@ -9,7 +10,8 @@ public class BaseEntity
     /// 主键ID
     /// </summary>
     [SugarColumn(ColumnName = "id", IsPrimaryKey = true)]
-    public long? Id { get; set; }
+    [JsonConverter(typeof(LongJsonConverter))]
+    public long Id { get; set; }
 
     /// <summary>
     /// 创建人
@@ -21,7 +23,7 @@ public class BaseEntity
     /// <summary>
     /// 创建时间
     /// </summary>
-    [SugarColumn(ColumnName = "created_time",InsertServerTime = true)]
+    [SugarColumn(ColumnName = "created_time", InsertServerTime = true)]
     [JsonIgnore]
     public DateTime CreatedTime { get; set; }
 
@@ -35,7 +37,7 @@ public class BaseEntity
     /// <summary>
     /// 最后修改时间
     /// </summary>
-    [SugarColumn(ColumnName = "updated_time",UpdateServerTime = true)]
+    [SugarColumn(ColumnName = "updated_time", UpdateServerTime = true)]
     [JsonIgnore]
     public DateTime UpdatedTime { get; set; }
 
