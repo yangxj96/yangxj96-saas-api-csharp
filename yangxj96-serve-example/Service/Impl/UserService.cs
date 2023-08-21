@@ -81,6 +81,14 @@ public class UserService : DbContext<User>, IUserService
     public List<User> GetAll()
     {
         _logger.LogInformation("[UserService] 获取所有用户");
-        return SimpleDb.GetList();
+        try
+        {
+            return SimpleDb.GetList();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("[UserService] 获取所有用户失败:{}", e.Message);
+            throw new DataQueryException("[UserService] 获取所有用户失败");
+        }
     }
 }
