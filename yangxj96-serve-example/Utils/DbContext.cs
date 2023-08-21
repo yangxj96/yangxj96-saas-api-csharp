@@ -12,7 +12,7 @@ public class DbContext<T> where T : class, new()
     {
         Db = new SqlSugarClient(new ConnectionConfig()
         {
-            ConnectionString = "Server=localhost;Port=5432;User Id=postgres;Password=QuVsKppcWvwwX2Vv;Database=yangxj96_saas_db;",
+            ConnectionString = "Server=192.168.31.6;Port=5432;User Id=postgres;Password=QuVsKppcWvwwX2Vv;Database=yangxj96_saas_db;",
             DbType = DbType.PostgreSQL,
             IsAutoCloseConnection = true,
             InitKeyType = InitKeyType.Attribute
