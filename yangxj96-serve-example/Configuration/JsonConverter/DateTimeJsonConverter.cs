@@ -19,7 +19,7 @@ public class DateTimeJsonConverter : JsonConverter<DateTime>
     {
         try
         {
-            return DateTime.ParseExact(reader.GetString(), _format, null);
+            return DateTime.ParseExact(reader.GetString()!, _format, null);
         }
         catch (Exception e)
         {

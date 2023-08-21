@@ -12,7 +12,7 @@ public class LongJsonConverter : JsonConverter<long>
 
     public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return reader.GetInt64();
+        return reader.TokenType == JsonTokenType.Number ? reader.GetInt64() : long.Parse(reader.GetString()!);
     }
 
     public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)

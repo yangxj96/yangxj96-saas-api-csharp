@@ -41,4 +41,10 @@ public class User : BaseEntity
     /// </summary>
     [SugarColumn(ColumnName = "credentials_expired")]
     public bool CredentialsExpired { get; set; } = false;
+
+    public override string ToString()
+    {
+        return
+            $"{nameof(Username)}: {Username}, {nameof(Password)}: {Password}, {nameof(AccessExpired)}: {AccessExpired}, {nameof(AccessLocked)}: {AccessLocked}, {nameof(AccessEnable)}: {AccessEnable}, {nameof(CredentialsExpired)}: {CredentialsExpired}";
+    }
 }
