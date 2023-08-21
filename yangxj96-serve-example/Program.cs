@@ -17,59 +17,47 @@ public static class Program
 
         builder.Services
             .AddControllers()
-            // System.Text.Json ÅäÖÃ
             .AddJsonOptions(options =>
             {
                 var jso = options.JsonSerializerOptions;
-                // ±àÂë¸ñÊ½
                 jso.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-                // ÊÇ·ñ¸ñÊ½»¯ÎÄ±¾
                 jso.WriteIndented = true;
-                // Ìí¼ÓÊ±¼ä¸ñÊ½×ª»»Æ÷
                 jso.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-                // ×Ö¶ÎÊ¹ÓÃÏÂ»®Ïß
                 jso.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy();
-                // ºöÂÔnullÖµ
                 jso.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-                // ºöÂÔÖ»¶Á×Ö¶Î
                 jso.IgnoreReadOnlyFields = true;
-                // ÔÊĞíÊôĞÔÖµÄ©Î²´æÔÚ¶ººÅ
                 jso.AllowTrailingCommas = true;
-                // ´¦ÀíÑ­»·ÒıÓÃÀàĞÍ
                 jso.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
         // Swagger
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        // Ìí¼Ónacos·şÎñ
         builder.Services.AddNacosAspNet(builder.Configuration, section: "NacosConfig");
-        // Ïà¹Ø·şÎñ×¢Èë
         // builder.Services.AddSingleton<SystemRemote>();
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
         builder.Host.ConfigureContainer<ContainerBuilder>(container =>
         {
             var assemblies = Assembly.GetExecutingAssembly();
-            // service×¢²á
-            container.RegisterAssemblyTypes(assemblies) //³ÌĞò¼¯ÄÚËùÓĞ¾ßÏóÀà 
+            // åŠ è½½service
+            container.RegisterAssemblyTypes(assemblies)
                 .Where(type => type.Name.EndsWith("Service"))
-                .PublicOnly() //Ö»Òªpublic·ÃÎÊÈ¨ÏŞµÄ
-                .Where(type => type.IsClass) //Ö»ÒªclassĞÍ£¨Ö÷ÒªÎªÁËÅÅ³ıÖµºÍinterfaceÀàĞÍ£© 
+                .PublicOnly()
+                .Where(type => type.IsClass)
                 .AsImplementedInterfaces();
-            // Ô¶³Ìµ÷ÓÃµÄ×¢²á
-            container.RegisterAssemblyTypes(assemblies) //³ÌĞò¼¯ÄÚËùÓĞ¾ßÏóÀà 
+            // åŠ è½½è¿œç¨‹è°ƒç”¨æ¥å£
+            container.RegisterAssemblyTypes(assemblies)
                 .Where(type => type.Name.EndsWith("Remote"))
-                .PublicOnly() //Ö»Òªpublic·ÃÎÊÈ¨ÏŞµÄ
-                .Where(type => type.IsClass) //Ö»ÒªclassĞÍ£¨Ö÷ÒªÎªÁËÅÅ³ıÖµºÍinterfaceÀàĞÍ£© 
+                .PublicOnly()
+                .Where(type => type.IsClass)
                 .AsImplementedInterfaces();
         });
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        // é…ç½®HTTPè¯·æ±‚ç®¡é“ã€‚
         if (app.Environment.IsDevelopment())
         {
-            // ¿ª·¢ÈËÔ±ÏêÇéÒ³Ãæ
             app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
