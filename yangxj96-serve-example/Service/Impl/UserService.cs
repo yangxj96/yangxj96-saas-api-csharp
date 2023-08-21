@@ -18,6 +18,11 @@ public class UserService : DbContext<User>, IUserService
         _logger.LogInformation("[UserService] 创建用户");
         try
         {
+            if (datum.Id < 0)
+            {
+                throw new DataExistException("[UserService] ID异常");
+            }
+
             using var tran = Db.UseTran();
             var id = Db.Insertable(datum).ExecuteReturnSnowflakeId();
             tran.CommitTran();
