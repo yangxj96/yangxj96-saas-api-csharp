@@ -8,7 +8,7 @@ public class UserService : DbContext<User>, IUserService
 {
     private readonly ILogger<UserService> _logger;
 
-    public UserService(ILogger<UserService> logger)
+    public UserService(ILogger<UserService> logger, IConfiguration configuration) : base(configuration)
     {
         _logger = logger;
     }
@@ -27,8 +27,7 @@ public class UserService : DbContext<User>, IUserService
             var id = Db.Insertable(datum).ExecuteReturnSnowflakeId();
             tran.CommitTran();
             return SimpleDb.GetById(id);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Db.RollbackTran();
             _logger.LogError("[UserService] 新增用户失败:{}", e.Message);
@@ -45,8 +44,7 @@ public class UserService : DbContext<User>, IUserService
             var result = Db.Deleteable(new User { Id = id }).ExecuteCommandHasChange();
             tran.CommitTran();
             return result;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Db.RollbackTran();
             _logger.LogError("[UserService] 根据ID删除用户失败:{}", e.Message);
@@ -69,8 +67,7 @@ public class UserService : DbContext<User>, IUserService
             var result = Db.Updateable(datum).ExecuteCommandHasChange();
             tran.CommitTran();
             return result ? SimpleDb.GetById(datum.Id) : null;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             Db.RollbackTran();
             _logger.LogError("[UserService] 更新用户失败:{}", e.Message);
@@ -84,8 +81,7 @@ public class UserService : DbContext<User>, IUserService
         try
         {
             return SimpleDb.GetList();
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             _logger.LogError("[UserService] 获取所有用户失败:{}", e.Message);
             throw new DataQueryException("[UserService] 获取所有用户失败");
