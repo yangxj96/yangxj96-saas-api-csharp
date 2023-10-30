@@ -7,7 +7,7 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
     /// </summary>
     public class JsonKebabCaseNamingPolicy : System.Text.Json.JsonNamingPolicy
     {
-        private const string Separator = "-";
+        private const char Separator = '-';
 
         public override string ConvertName(string name)
         {

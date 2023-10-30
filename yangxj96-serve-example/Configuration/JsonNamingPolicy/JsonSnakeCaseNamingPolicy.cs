@@ -7,7 +7,7 @@ namespace yangxj96_serve_example.Configuration.JsonNamingPolicy
     /// </summary>
     public class JsonSnakeCaseNamingPolicy : System.Text.Json.JsonNamingPolicy
     {
-        private const string Separator = "_";
+        private const char Separator = '-';
 
         public override string ConvertName(string name)
         {

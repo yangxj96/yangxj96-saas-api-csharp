@@ -11,14 +11,14 @@ public class BaseEntity
     /// </summary>
     [SugarColumn(ColumnName = "id", IsPrimaryKey = true)]
     [JsonConverter(typeof(LongJsonConverter))]
-    public long Id { get; set; }
+    public long Id { get; init; }
 
     /// <summary>
     /// 创建人
     /// </summary>
-    [SugarColumn(ColumnName = "created_by")]
+    [SugarColumn(ColumnName = "created_user")]
     [JsonIgnore]
-    public long CreatedBy { get; set; } = 0;
+    public long CreatedUser { get; set; } = 0;
 
     /// <summary>
     /// 创建时间
@@ -30,9 +30,9 @@ public class BaseEntity
     /// <summary>
     /// 最后修改人,默认0
     /// </summary>
-    [SugarColumn(ColumnName = "updated_by")]
+    [SugarColumn(ColumnName = "updated_user")]
     [JsonIgnore]
-    public long UpdatedBy { get; set; } = 0;
+    public long UpdatedUser { get; set; } = 0;
 
     /// <summary>
     /// 最后修改时间
@@ -46,5 +46,5 @@ public class BaseEntity
     /// </summary>
     [SugarColumn(ColumnName = "deleted")]
     [JsonIgnore]
-    public bool Deleted { get; set; } = false;
+    public DateTime Deleted { get; set; } 
 }

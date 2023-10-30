@@ -23,17 +23,24 @@ namespace yangxj96_serve_example.Controllers
         }
 
         [HttpPost]
-        public R Created(User datum)
+        public User Created(User datum)
         {
             _logger.LogInformation("[UserController] 新增用户");
-            return R.Success(_userService.Created(datum));
+            return _userService.Created(datum);
+        }
+
+        [HttpGet("Page")]
+        public List<User> Page()
+        {
+            _logger.LogInformation("[UserController] 分页查询");
+            return _userService.Page();
         }
 
         [HttpGet("All")]
-        public R GetAll()
+        public List<User> GetAll()
         {
             _logger.LogInformation("[UserController] 获取所有用户");
-            return R.Success(_userService.GetAll());
+            return _userService.GetAll();
         }
     }
 }

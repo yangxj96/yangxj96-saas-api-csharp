@@ -3,7 +3,7 @@ using yangxj96_serve_example.Common;
 
 namespace yangxj96_serve_example.Model;
 
-[SugarTable("db_user.t_user")]
+[SugarTable("db_user.t_account")]
 public class User : BaseEntity
 {
     /// <summary>

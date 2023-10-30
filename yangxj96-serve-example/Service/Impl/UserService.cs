@@ -1,4 +1,5 @@
-﻿using yangxj96_serve_example.Common.Exception;
+﻿using SqlSugar;
+using yangxj96_serve_example.Common.Exception;
 using yangxj96_serve_example.Model;
 using yangxj96_serve_example.Utils;
 
@@ -85,6 +86,26 @@ public class UserService : DbContext<User>, IUserService
         {
             _logger.LogError("[UserService] 获取所有用户失败:{}", e.Message);
             throw new DataQueryException("[UserService] 获取所有用户失败");
+        }
+    }
+
+    public List<User> Page()
+    {
+        _logger.LogInformation("[UserService] 分页查询");
+        try
+        {
+            var page = new PageModel
+            {
+                PageSize = 10,
+                PageIndex = 1
+            };
+            var conditional = new List<IConditionalModel>();
+            return SimpleDb.GetPageList(conditional,page);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("[UserService] 分页查询失败:{}", e.Message);
+            throw new DataQueryException("[UserService] 分页查询失败");
         }
     }
 }

@@ -2,66 +2,69 @@
 
 namespace yangxj96_serve_example.Common.Response;
 
-public class R
+public class R<T>
 {
-    public long Code { get; set; } = 0L;
+    public long Code { get; set; }
 
-    public string Msg { get; set; } = "success";
+    public string? Msg { get; set; }
 
-    public object? Data { get; set; }
+    public T? Data { get; set; }
+    
+    /// <summary>
+    /// 额外的信息
+    /// </summary>
+    public dynamic? Extra { get; set; }
 
     /// <summary>
     /// 成功响应
     /// </summary>
     /// <returns>R</returns>
-    public static R Success()
+    public static R<T> Success() => new()
     {
-        return new R
-        {
-            Code = 0,
-            Msg = RStatus.Success.GetDisplayName()
-        };
-    }
+        Code = 0,
+        Msg = RStatus.Success.GetDisplayName()
+    };
 
     /// <summary>
     /// 成功响应
     /// </summary>
     /// <param name="data">跟随返回的数据</param>
     /// <returns>R</returns>
-    public static R Success(object data)
+    public static R<T> Success(T data) => new()
     {
-        return new R
-        {
-            Code = RStatus.Success.GetHashCode(),
-            Msg = RStatus.Success.GetDisplayName(),
-            Data = data
-        };
-    }
+        Code = RStatus.Success.GetHashCode(),
+        Msg = RStatus.Success.GetDisplayName(),
+        Data = data
+    };
 
     /// <summary>
     /// 失败响应
     /// </summary>
     /// <returns>R</returns>
-    public static R Failure()
+    public static R<T> Failure() => new()
     {
-        return new R
-        {
-            Code = RStatus.Failure.GetHashCode(),
-            Msg = RStatus.Failure.GetDisplayName(),
-        };
-    }
+        Code = RStatus.Failure.GetHashCode(),
+        Msg = RStatus.Failure.GetDisplayName(),
+    };
+    
+    /// <summary>
+    /// 失败响应
+    /// </summary>
+    /// <returns>R</returns>
+    public static R<T> Failure(string error) => new()
+    {
+        Code = RStatus.Failure.GetHashCode(),
+        Msg = error,
+    };
 
     /// <summary>
     /// 失败定义
     /// </summary>
     /// <param name="status">状态</param>
     /// <returns>R</returns>
-    public static R FailureSpecify(RStatus status)
+    public static R<T> Failure(RStatus status) => new()
     {
-        return new R
-        {
-            Code = status.GetHashCode(),
-            Msg = status.GetDisplayName()
-        };
-    }
+        Code = status.GetHashCode(),
+        Msg = status.GetDisplayName()
+    };
 }

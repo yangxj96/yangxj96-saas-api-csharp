@@ -5,4 +5,8 @@ namespace yangxj96_serve_example.Service;
 
 public interface IUserService : IBaseService<User>
 {
+    /// <summary>
+    /// 分页查询
+    /// </summary>
+    List<User> Page();
 }

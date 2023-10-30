@@ -17,10 +17,12 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services
+            .AddScoped<UniformResponseExtraHelper>()
             .AddControllers(options =>
             {
                 // 全局异常处理器
                 options.Filters.Add(new HttpExceptionFilter());
+                options.Filters.Add<UniformResponseFilter>();
             })
             .AddJsonOptions(options =>
             {
