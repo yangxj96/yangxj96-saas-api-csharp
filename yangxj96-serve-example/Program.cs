@@ -4,7 +4,6 @@ using System.Text.Json.Serialization;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Nacos.AspNetCore.V2;
-using SqlSugar;
 using yangxj96_serve_example.Configuration.JsonConverter;
 using yangxj96_serve_example.Configuration.JsonNamingPolicy;
 using yangxj96_serve_example.Filter;
@@ -38,6 +37,7 @@ public static class Program
         // Swagger
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        // nacos配置
         builder.Services.AddNacosAspNet(builder.Configuration, section: "NacosConfig");
         // Autofac
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

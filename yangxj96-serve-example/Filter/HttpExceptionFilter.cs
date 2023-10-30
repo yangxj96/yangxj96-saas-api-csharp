@@ -26,11 +26,11 @@ public class HttpExceptionFilter : IActionFilter, IOrderedFilter
         // 根据异常类型进行设置响应内容
         var result = context.Exception switch
         {
-            DataInsertException => R.FailureSpecify(RStatus.DataInsertFailure),
-            DataDeletedException => R.FailureSpecify(RStatus.DataDeleteFailure),
-            DataUpdateException => R.FailureSpecify(RStatus.DataUpdateFailure),
-            DataQueryException => R.FailureSpecify(RStatus.DataQueryFailure),
-            DataExistException => R.FailureSpecify(RStatus.DataExistFailure),
+            DataInsertException   => R.FailureSpecify(RStatus.DataInsertFailure),
+            DataDeletedException  => R.FailureSpecify(RStatus.DataDeleteFailure),
+            DataUpdateException   => R.FailureSpecify(RStatus.DataUpdateFailure),
+            DataQueryException    => R.FailureSpecify(RStatus.DataQueryFailure),
+            DataExistException    => R.FailureSpecify(RStatus.DataExistFailure),
             DataNotExistException => R.FailureSpecify(RStatus.DataNotExistFailure),
             _ => R.Failure()
         };
