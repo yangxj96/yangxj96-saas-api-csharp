@@ -22,6 +22,7 @@ public static class Program
             {
                 // 全局异常处理器
                 options.Filters.Add(new HttpExceptionFilter());
+                // 全局响应修改过滤器处理器
                 options.Filters.Add<UniformResponseFilter>();
             })
             .AddJsonOptions(options =>
@@ -62,7 +63,7 @@ public static class Program
 
         var app = builder.Build();
 
-        // 配置HTTP请求管道。
+        // 配置HTTP请求管道。如果是开发模式,则启用swagger
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();

@@ -3,6 +3,7 @@ using Yangxj96.Serve.Example.Model;
 
 namespace Yangxj96.Serve.Example.Service;
 
+
 public interface IUserService : IBaseService<User>
 {
     /// <summary>
